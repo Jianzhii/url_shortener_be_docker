@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UrlModule } from './url/url.module';
 import { UlrShortenerModule } from './ulr_shortener/ulr_shortener.module';
 import * as Joi from '@hapi/joi';
 import * as path from 'path';
@@ -28,10 +27,9 @@ console.log(__dirname);
             username: process.env.DATABASE_USER,
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE,
-            entities: [path.join(__dirname, '*.entity.js')],
-            synchronize: false,
+            entities: [path.join(__dirname, '/**/*.entity.js')],
+            synchronize: true,
         }),
-        UrlModule,
         UlrShortenerModule,
     ],
     controllers: [AppController],
