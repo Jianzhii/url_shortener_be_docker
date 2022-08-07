@@ -6,7 +6,7 @@ export class UlrShortener {
     id: number;
 
     @Column({ nullable: false })
-    code: string;
+    alias: string;
 
     @Column({ nullable: false })
     url: string;
