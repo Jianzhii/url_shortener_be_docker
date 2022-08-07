@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UlrShortenerController } from './ulr_shortener.controller';
-import { UlrShortenerService } from './ulr_shortener.service';
+import { UlrShortenerController } from './url_shortener.controller';
+import { UlrShortenerService } from './url_shortener.service';
 
 describe('UlrShortenerController', () => {
     let controller: UlrShortenerController;

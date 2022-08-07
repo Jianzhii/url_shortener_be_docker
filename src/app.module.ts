@@ -3,9 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UlrShortenerModule } from './ulr_shortener/ulr_shortener.module';
 import * as Joi from '@hapi/joi';
 import * as path from 'path';
+import { UlrShortenerModule } from './url_shortener/url_shortener.module';
 console.log(__dirname);
 @Module({
     imports: [

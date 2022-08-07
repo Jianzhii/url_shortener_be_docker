@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UlrShortenerService } from './ulr_shortener.service';
+import { UlrShortenerService } from './url_shortener.service';
 
 describe('UlrShortenerService', () => {
     let service: UlrShortenerService;
