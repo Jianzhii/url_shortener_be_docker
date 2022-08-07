@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UrlModule } from './url/url.module';
+import { UlrShortenerModule } from './ulr_shortener/ulr_shortener.module';
 import * as Joi from '@hapi/joi';
 import * as path from 'path';
 console.log(__dirname);
@@ -31,6 +32,7 @@ console.log(__dirname);
             synchronize: false,
         }),
         UrlModule,
+        UlrShortenerModule,
     ],
     controllers: [AppController],
     providers: [AppService],
