@@ -1,14 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { createHash } from 'crypto';
+import { Repository } from 'typeorm';
 import { CreateUlrShortenerDto } from './dto/create_url_shortener.dto';
-
+import { UlrShortenerEntity } from './entities/url_shortener.entity';
 @Injectable()
 export class UlrShortenerService {
-    create(createUlrShortenerDto: CreateUlrShortenerDto) {
-        console.log(createUlrShortenerDto);
+    constructor(
+        @InjectRepository(UlrShortenerEntity)
+        private readonly urlShortenerRepository: Repository<UlrShortenerEntity>,
+    ) {}
+    async create(createUlrShortenerDto: CreateUlrShortenerDto) {
+        if (createUlrShortenerDto.alias) {
+        } else {
+            const md5hash = createHash('md5')
+                .update(createUlrShortenerDto.url)
+                .digest('hex');
+            // console.log(md5hash);
+            const shortened = md5hash.slice(0, 7);
+            console.log(shortened);
+            console.log(Buffer.from(shortened));
+        }
         return 'This action adds a new ulrShortener';
     }
 
-    findOne(id: string) {
-        return `This action returns a #${id} ulrShortener`;
+    async findOne(alias: string) {
+        const result = await this.urlShortenerRepository.findOne({
+            where: {
+                short_url: alias,
+            },
+        });
+        if (!result)
+            throw new NotFoundException(
+                `There is no long URL to redirect to. Please check that the short URL input is correct.`,
+            );
+        return {
+            status: 200,
+            message: `URL successfully retrieved`,
+            data: result,
+        };
     }
 }

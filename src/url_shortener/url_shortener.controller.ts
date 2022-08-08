@@ -7,18 +7,18 @@ export class UlrShortenerController {
     constructor(private readonly ulrShortenerService: UlrShortenerService) {}
 
     @Post()
-    create(@Body() createUlrShortenerDto: CreateUlrShortenerDto) {
+    async create(@Body() createUlrShortenerDto: CreateUlrShortenerDto) {
         try {
-            return this.ulrShortenerService.create(createUlrShortenerDto);
+            return await this.ulrShortenerService.create(createUlrShortenerDto);
         } catch (err) {
             throw err;
         }
     }
 
     @Get(':alias')
-    findOne(@Param('alias') alias: string) {
+    async findOne(@Param('alias') alias: string) {
         try {
-            return this.ulrShortenerService.findOne(alias);
+            return await this.ulrShortenerService.findOne(alias);
         } catch (err) {
             throw err;
         }

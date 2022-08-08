@@ -1,15 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity('url')
-export class UlrShortener {
+export class UlrShortenerEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({ nullable: false })
-    alias: string;
+    short_url: string;
 
     @Column({ nullable: false })
-    url: string;
+    long_url: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     create_dt: boolean;
