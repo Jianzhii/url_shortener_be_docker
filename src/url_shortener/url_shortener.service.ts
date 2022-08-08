@@ -31,15 +31,14 @@ export class UlrShortenerService {
             const md5hash = createHash('md5')
                 .update(moment().format(`YYYYMMDDHHmmSSSSSSSSS`))
                 .digest('hex');
-            console.log(md5hash);
             const shortened = md5hash.slice(0, 5);
             const alias = this.base62Encode(shortened);
             createUlrShortenerDto.alias = alias;
         }
-
         const result = await this.urlShortenerRepository.save(
             Object.assign(new UlrShortenerEntity(), createUlrShortenerDto),
         );
+        result.alias = process.env.DOMAIN_NAME + result.alias;
         return {
             status: 200,
             message: `URL successfully shortened and saved!`,

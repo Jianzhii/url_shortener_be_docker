@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import * as Joi from '@hapi/joi';
 import * as path from 'path';
 import { UlrShortenerModule } from './url_shortener/url_shortener.module';
+import { join } from 'path';
 console.log(__dirname);
 @Module({
     imports: [
@@ -18,6 +19,7 @@ console.log(__dirname);
                 DATABASE_PASSWORD: Joi.string().required(),
                 DATABASE_PORT: Joi.number().required().default(3306),
                 DATABASE: Joi.string(),
+                DOMAIN_NAME: Joi.string().default(`http://localhost:3000/`),
             }),
         }),
         TypeOrmModule.forRoot({
