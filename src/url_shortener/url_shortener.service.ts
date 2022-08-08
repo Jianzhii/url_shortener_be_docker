@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import Base62Str from 'base62str';
 import { createHash } from 'crypto';
 import { Repository } from 'typeorm';
 import { CreateUlrShortenerDto } from './dto/create_url_shortener.dto';
@@ -14,12 +15,12 @@ export class UlrShortenerService {
         if (createUlrShortenerDto.alias) {
         } else {
             const md5hash = createHash('md5')
-                .update(createUlrShortenerDto.url)
+                .update(createUlrShortenerDto.long_url)
                 .digest('hex');
-            // console.log(md5hash);
-            const shortened = md5hash.slice(0, 7);
-            console.log(shortened);
-            console.log(Buffer.from(shortened));
+            const shortened = md5hash.slice(0, 5);
+            const base62 = Base62Str.createInstance();
+            const alias = base62.encodeStr(shortened);
+            createUlrShortenerDto.alias = alias;
         }
 
         const result = await this.urlShortenerRepository.save(

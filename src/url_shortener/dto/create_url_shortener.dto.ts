@@ -6,5 +6,5 @@ export class CreateUlrShortenerDto {
 
     @IsDefined()
     @IsUrl()
-    url: string;
+    long_url: string;
 }
