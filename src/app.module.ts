@@ -19,7 +19,7 @@ console.log(__dirname);
                 DATABASE_PASSWORD: Joi.string().required(),
                 DATABASE_PORT: Joi.number().required().default(3306),
                 DATABASE: Joi.string(),
-                DOMAIN_NAME: Joi.string().default(`http://localhost:3000/`),
+                DOMAIN_NAME: Joi.string().default(`http://localhost:8080/`),
             }),
         }),
         TypeOrmModule.forRoot({
