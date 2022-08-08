@@ -76,4 +76,8 @@ export class UlrShortenerService {
         });
         return result ? result.long_url === longUrl : false;
     }
+
+    async clearAll() {
+        await this.urlShortenerRepository.clear();
+    }
 }

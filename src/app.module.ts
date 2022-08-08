@@ -28,7 +28,7 @@ import { UlrShortenerModule } from './url_shortener/url_shortener.module';
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE,
             entities: [path.join(__dirname, '/**/*.entity.js')],
-            synchronize: true,
+            synchronize: false,
         }),
         UlrShortenerModule,
     ],
