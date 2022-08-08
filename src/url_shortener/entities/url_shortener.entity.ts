@@ -6,7 +6,7 @@ export class UlrShortenerEntity extends BaseEntity {
     id: number;
 
     @Column({ nullable: false })
-    short_url: string;
+    alias: string;
 
     @Column({ nullable: false })
     long_url: string;

@@ -21,13 +21,21 @@ export class UlrShortenerService {
             console.log(shortened);
             console.log(Buffer.from(shortened));
         }
-        return 'This action adds a new ulrShortener';
+
+        const result = await this.urlShortenerRepository.save(
+            Object.assign(new UlrShortenerEntity(), createUlrShortenerDto),
+        );
+        return {
+            status: 200,
+            message: `URL successfully shortened and saved!`,
+            data: result,
+        };
     }
 
     async findOne(alias: string) {
         const result = await this.urlShortenerRepository.findOne({
             where: {
-                short_url: alias,
+                alias: alias,
             },
         });
         if (!result)
