@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    Injectable,
+    NotAcceptableException,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Base62Str from 'base62str';
 import { createHash } from 'crypto';
 import { Repository } from 'typeorm';
 import { CreateUlrShortenerDto } from './dto/create_url_shortener.dto';
 import { UlrShortenerEntity } from './entities/url_shortener.entity';
+import * as moment from 'moment';
 @Injectable()
 export class UlrShortenerService {
     constructor(
@@ -13,13 +18,22 @@ export class UlrShortenerService {
     ) {}
     async create(createUlrShortenerDto: CreateUlrShortenerDto) {
         if (createUlrShortenerDto.alias) {
+            const isDuplicated = await this.checkDuplication(
+                createUlrShortenerDto.alias,
+                createUlrShortenerDto.long_url,
+            );
+            if (isDuplicated) {
+                throw new NotAcceptableException(
+                    `This alias has already been used by someone. Please choose another alias.`,
+                );
+            }
         } else {
             const md5hash = createHash('md5')
-                .update(createUlrShortenerDto.long_url)
+                .update(moment().format(`YYYYMMDDHHmmSSSSSSSSS`))
                 .digest('hex');
+            console.log(md5hash);
             const shortened = md5hash.slice(0, 5);
-            const base62 = Base62Str.createInstance();
-            const alias = base62.encodeStr(shortened);
+            const alias = this.base62Encode(shortened);
             createUlrShortenerDto.alias = alias;
         }
 
@@ -31,6 +45,11 @@ export class UlrShortenerService {
             message: `URL successfully shortened and saved!`,
             data: result,
         };
+    }
+
+    base62Encode(text) {
+        const base62 = Base62Str.createInstance();
+        return base62.encodeStr(text);
     }
 
     async findOne(alias: string) {
@@ -48,5 +67,14 @@ export class UlrShortenerService {
             message: `URL successfully retrieved`,
             data: result,
         };
+    }
+
+    async checkDuplication(alias, longUrl) {
+        const result = await this.urlShortenerRepository.findOne({
+            where: {
+                alias: alias,
+            },
+        });
+        return result ? result.long_url === longUrl : false;
     }
 }
