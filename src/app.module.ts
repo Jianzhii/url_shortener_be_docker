@@ -1,13 +1,11 @@
+import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import * as Joi from '@hapi/joi';
-import * as path from 'path';
 import { UlrShortenerModule } from './url_shortener/url_shortener.module';
-import { join } from 'path';
-console.log(__dirname);
 @Module({
     imports: [
         ConfigModule.forRoot({
