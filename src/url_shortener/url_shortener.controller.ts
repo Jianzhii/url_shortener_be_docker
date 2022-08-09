@@ -9,7 +9,14 @@ export class UlrShortenerController {
     @Post()
     async create(@Body() createUlrShortenerDto: CreateUlrShortenerDto) {
         try {
-            return await this.ulrShortenerService.create(createUlrShortenerDto);
+            const result = await this.ulrShortenerService.create(
+                createUlrShortenerDto,
+            );
+            return {
+                status: 200,
+                message: `URL successfully shortened and saved!`,
+                data: result,
+            };
         } catch (err) {
             throw err;
         }
@@ -18,7 +25,12 @@ export class UlrShortenerController {
     @Get(':alias')
     async findOne(@Param('alias') alias: string) {
         try {
-            return await this.ulrShortenerService.findOne(alias);
+            const result = await this.ulrShortenerService.findOne(alias);
+            return {
+                status: 200,
+                message: `URL successfully retrieved`,
+                data: result,
+            };
         } catch (err) {
             throw err;
         }

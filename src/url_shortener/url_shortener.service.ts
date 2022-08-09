@@ -39,11 +39,7 @@ export class UlrShortenerService {
             Object.assign(new UlrShortenerEntity(), createUlrShortenerDto),
         );
         result.alias = process.env.DOMAIN_NAME + result.alias;
-        return {
-            status: 200,
-            message: `URL successfully shortened and saved!`,
-            data: result,
-        };
+        return result;
     }
 
     base62Encode(text) {
@@ -61,11 +57,7 @@ export class UlrShortenerService {
             throw new NotFoundException(
                 `There is no long URL to redirect to. Please check that the short URL input is correct.`,
             );
-        return {
-            status: 200,
-            message: `URL successfully retrieved`,
-            data: result,
-        };
+        return result;
     }
 
     async checkDuplication(alias, longUrl) {
