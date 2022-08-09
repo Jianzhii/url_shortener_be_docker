@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity('url')
-export class UlrShortenerEntity extends BaseEntity {
+export class UrlShortenerEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 

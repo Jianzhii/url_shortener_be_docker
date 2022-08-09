@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UlrShortenerEntity } from './entities/url_shortener.entity';
-import { UlrShortenerController } from './url_shortener.controller';
-import { UlrShortenerService } from './url_shortener.service';
+import { UrlShortenerEntity } from './entities/url_shortener.entity';
+import { UrlShortenerController } from './url_shortener.controller';
+import { UrlShortenerService } from './url_shortener.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UlrShortenerEntity])],
-    controllers: [UlrShortenerController],
-    providers: [UlrShortenerService],
+    imports: [TypeOrmModule.forFeature([UrlShortenerEntity])],
+    controllers: [UrlShortenerController],
+    providers: [UrlShortenerService],
 })
 export class UlrShortenerModule {}

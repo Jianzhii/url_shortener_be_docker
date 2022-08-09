@@ -1,6 +1,6 @@
 import { IsDefined, IsOptional, IsUrl } from 'class-validator';
 
-export class CreateUlrShortenerDto {
+export class CreateUrlShortenerDto {
     @IsOptional()
     alias: string;
 

@@ -8,18 +8,18 @@ import Base62Str from 'base62str';
 import { createHash } from 'crypto';
 import * as moment from 'moment';
 import { Repository } from 'typeorm';
-import { CreateUlrShortenerDto } from './dto/create_url_shortener.dto';
-import { UlrShortenerEntity } from './entities/url_shortener.entity';
+import { CreateUrlShortenerDto } from './dto/create_url_shortener.dto';
+import { UrlShortenerEntity } from './entities/url_shortener.entity';
 @Injectable()
-export class UlrShortenerService {
+export class UrlShortenerService {
     constructor(
-        @InjectRepository(UlrShortenerEntity)
-        private readonly urlShortenerRepository: Repository<UlrShortenerEntity>,
+        @InjectRepository(UrlShortenerEntity)
+        private readonly urlShortenerRepository: Repository<UrlShortenerEntity>,
     ) {}
-    async create(createUlrShortenerDto: CreateUlrShortenerDto) {
-        if (createUlrShortenerDto.alias) {
+    async create(createUrlShortenerDto: CreateUrlShortenerDto) {
+        if (createUrlShortenerDto.alias) {
             const isDuplicated = await this.checkDuplication(
-                createUlrShortenerDto.alias,
+                createUrlShortenerDto.alias,
             );
             if (isDuplicated) {
                 throw new NotAcceptableException(
@@ -31,10 +31,10 @@ export class UlrShortenerService {
             while (await this.checkDuplication(alias)) {
                 alias = this.generateHash();
             }
-            createUlrShortenerDto.alias = alias;
+            createUrlShortenerDto.alias = alias;
         }
         const result = await this.urlShortenerRepository.save(
-            Object.assign(new UlrShortenerEntity(), createUlrShortenerDto),
+            Object.assign(new UrlShortenerEntity(), createUrlShortenerDto),
         );
         result.alias = process.env.DOMAIN_NAME + result.alias;
         return result;

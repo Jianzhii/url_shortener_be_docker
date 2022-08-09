@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateUlrShortenerDto } from './dto/create_url_shortener.dto';
-import { UlrShortenerService } from './url_shortener.service';
+import { CreateUrlShortenerDto } from './dto/create_url_shortener.dto';
+import { UrlShortenerService } from './url_shortener.service';
 
 @Controller('shorten')
-export class UlrShortenerController {
-    constructor(private readonly ulrShortenerService: UlrShortenerService) {}
+export class UrlShortenerController {
+    constructor(private readonly urlShortenerService: UrlShortenerService) {}
 
     @Post()
-    async create(@Body() createUlrShortenerDto: CreateUlrShortenerDto) {
+    async create(@Body() createUrlShortenerDto: CreateUrlShortenerDto) {
         try {
-            const result = await this.ulrShortenerService.create(
-                createUlrShortenerDto,
+            const result = await this.urlShortenerService.create(
+                createUrlShortenerDto,
             );
             return {
                 status: 200,
@@ -25,7 +25,7 @@ export class UlrShortenerController {
     @Get(':alias')
     async findOne(@Param('alias') alias: string) {
         try {
-            const result = await this.ulrShortenerService.findOne(alias);
+            const result = await this.urlShortenerService.findOne(alias);
             return {
                 status: 200,
                 message: `URL successfully retrieved`,

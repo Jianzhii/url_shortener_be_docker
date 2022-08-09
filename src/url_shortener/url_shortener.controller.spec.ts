@@ -3,21 +3,21 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
-import { UlrShortenerEntity } from './entities/url_shortener.entity';
-import { UlrShortenerController } from './url_shortener.controller';
-import { UlrShortenerService } from './url_shortener.service';
+import { UrlShortenerEntity } from './entities/url_shortener.entity';
+import { UrlShortenerController } from './url_shortener.controller';
+import { UrlShortenerService } from './url_shortener.service';
 
 describe('UlrShortenerController', () => {
-    let controller: UlrShortenerController;
-    let service: UlrShortenerService;
+    let controller: UrlShortenerController;
+    let service: UrlShortenerService;
 
     beforeAll(async () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [
                 ConfigModule.forRoot({
                     validationSchema: Joi.object({
-                        NODE_ENV: Joi.string().required(),
-                        NODE_PORT: Joi.number().required(),
+                        ENV: Joi.string().required(),
+                        PORT: Joi.number().required(),
                         DATABASE_HOST_TEST: Joi.string().required(),
                         DATABASE_USER_TEST: Joi.string().required(),
                         DATABASE_PASSWORD_TEST: Joi.string().required(),
@@ -40,22 +40,18 @@ describe('UlrShortenerController', () => {
                     entities: [path.join(__dirname, '/**/*.entity.{ts, js}')],
                     synchronize: false,
                 }),
-                TypeOrmModule.forFeature([UlrShortenerEntity]),
+                TypeOrmModule.forFeature([UrlShortenerEntity]),
             ],
-            controllers: [UlrShortenerController],
-            providers: [UlrShortenerService],
+            controllers: [UrlShortenerController],
+            providers: [UrlShortenerService],
         }).compile();
 
-        controller = module.get<UlrShortenerController>(UlrShortenerController);
-        service = module.get<UlrShortenerService>(UlrShortenerService);
+        controller = module.get<UrlShortenerController>(UrlShortenerController);
+        service = module.get<UrlShortenerService>(UrlShortenerService);
     });
 
     afterAll(async () => {
         await service.clearAll();
-    });
-
-    it('should be defined', () => {
-        expect(controller).toBeDefined();
     });
 
     it(`POST /shorten`, async () => {
