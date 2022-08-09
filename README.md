@@ -35,8 +35,8 @@ $ npm run test:cov
 ## .env File
 
 ```
-NODE_ENV = xxx
-NODE_PORT = 3000
+ENV = xxx
+PORT = 3000
 DOMAIN_NAME = http://localhost:8080/
 
 DATABASE_HOST = xxx

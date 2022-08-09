@@ -10,8 +10,8 @@ import { UlrShortenerModule } from './url_shortener/url_shortener.module';
     imports: [
         ConfigModule.forRoot({
             validationSchema: Joi.object({
-                NODE_ENV: Joi.string().required(),
-                NODE_PORT: Joi.number().required(),
+                ENV: Joi.string().required(),
+                PORT: Joi.number().required(),
                 DATABASE_HOST: Joi.string().required(),
                 DATABASE_USER: Joi.string().required(),
                 DATABASE_PASSWORD: Joi.string().required(),
