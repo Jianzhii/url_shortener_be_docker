@@ -63,6 +63,20 @@ describe('UlrShortenerController', () => {
         expect(result.data.alias).toBe(`${process.env.DOMAIN_NAME}${alias}`);
     });
 
+    test(`POST /shorten (Repeated alias)`, async () => {
+        try {
+            const alias = `test`;
+            await controller.create({
+                long_url: 'https://google.com',
+                alias: alias,
+            });
+        } catch (err) {
+            expect(err.message).toBe(
+                `This alias has already been used by someone. Please choose another alias.`,
+            );
+        }
+    });
+
     it(`GET /shorten/:alias`, async () => {
         const alias = `test`;
         const result = await controller.findOne(alias);
