@@ -31,6 +31,25 @@ AUTO_INCREMENT = 36
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Schema url_test
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `url_test` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `url_test` ;
+
+-- -----------------------------------------------------
+-- Table `url_test`.`url`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `url_test`.`url` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `create_dt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `long_url` VARCHAR(255) NOT NULL,
+  `alias` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 36
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
