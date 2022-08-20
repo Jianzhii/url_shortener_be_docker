@@ -10,7 +10,7 @@ Statements to create the schema and table for the application itself and testing
 $ npm install
 ```
 
-## Running the app
+## Running the app locally
 
 ```bash
 # development
@@ -56,3 +56,21 @@ DATABASE_PASSWORD_TEST = xxx
 DATABASE_PORT_TEST = xxx
 DATABASE_TEST = xxx
 ```
+
+## Docker Image
+
+A `Dockerfile` is included to build the application into a container image. A similar image has also been published to Docker Registry and can be pulled using the following command:
+
+```bash
+$ docker pull jzshum/url_shortener_be
+```
+
+## Running the app in a container
+
+Once the image has been pulled or created, it can be started within a docker container with the following command:
+
+```bash
+$ docker run -d -p 3000:3000 --env-file .env jzshum/url_shortener_be
+```
+
+where the `.env` is the same `.env` used to start the application locally and contain the same variables mentioned in the earlier [section](#env-file) on `.env` and the application listening to port 3000.
