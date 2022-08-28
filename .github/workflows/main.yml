@@ -28,3 +28,15 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/url_shortener_be:dev
+
+      - name: Deploy latest image
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/url_shortener_be:dev
+            docker stop url_shortener_be
+            docker rm url_shortener_be
+            docker run -d -p 3000:3000 --env-file=be.env --name=url_shortener_be ${{ secrets.DOCKER_USERNAME }}/url_shortener_be:dev
+          host: ${{ secrets.REMOTE_HOST }}
+          user: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY}}
