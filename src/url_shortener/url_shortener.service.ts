@@ -9,7 +9,9 @@ import { createHash } from 'crypto';
 import * as moment from 'moment';
 import { Repository } from 'typeorm';
 import { CreateUrlShortenerDto } from './dto/create_url_shortener.dto';
+import { DeleteUrlShortenerDto } from './dto/delete_url_shortener.dto';
 import { UrlShortenerEntity } from './entities/url_shortener.entity';
+const { uuid } = require('uuidv4');
 @Injectable()
 export class UrlShortenerService {
     constructor(
@@ -33,6 +35,9 @@ export class UrlShortenerService {
             }
             createUrlShortenerDto.alias = alias;
         }
+
+        const token = uuid();
+        createUrlShortenerDto['token'] = token;
         const result = await this.urlShortenerRepository.save(
             Object.assign(new UrlShortenerEntity(), createUrlShortenerDto),
         );
@@ -64,6 +69,16 @@ export class UrlShortenerService {
                 alias: alias,
             },
         });
+    }
+
+    async deleteAlias(deleteUrlShortenerDto: DeleteUrlShortenerDto) {
+        const result = await this.findOne(deleteUrlShortenerDto.alias);
+        if (deleteUrlShortenerDto.token !== result.token) {
+            throw new NotAcceptableException(
+                `Token does not match the issued token for this alias. Please check your input.`,
+            );
+        }
+        await this.urlShortenerRepository.delete(result.id);
     }
 
     async clearAll() {

@@ -13,4 +13,7 @@ export class UrlShortenerEntity extends BaseEntity {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     create_dt: boolean;
+
+    @Column({ nullable: false })
+    token: string;
 }
